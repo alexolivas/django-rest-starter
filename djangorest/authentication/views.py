@@ -6,7 +6,6 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate
 from serializers import TokenSerializer
-from django.core.exceptions import ObjectDoesNotExist
 
 
 class LoginView(APIView):
@@ -27,11 +26,9 @@ class LoginView(APIView):
             user = authenticate(username=username, password=password)
             if user is not None:
                 if user.is_active:
-                    try:
-                        # Get the user's existing token, if one doesn't exist generate a new one
-                        user_token = Token.objects.get(user=user)
-                    except ObjectDoesNotExist:
-                        user_token = Token.objects.create(user=user)
+
+                    # Get the user's existing token, if one doesn't exist generate a new one
+                    user_token, created = Token.objects.get_or_create(user=user)
 
                     # Serialize the user and token so the data can be passed back to the caller
                     serializer = TokenSerializer(user_token)
