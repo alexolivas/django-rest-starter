@@ -54,16 +54,20 @@ class LogoutView(APIView):
     """
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
-    # permission_classes = (permissions.IsAdminUser,)
 
-    # def post(self, request, format=None):
     def post(self, request, format=None):
-        # TODO: Get the token based on the user ID and delete it so that it is no longer valid
-        # TODO: Add null checks around this
-        user_token = Token.objects.get(user=request.user.pk)
-        message = {
-            'success': 'true',
-            'message': 'Everything is ok!',
-            'user': user_token.key
-        }
-        return Response(message, status=status.HTTP_200_OK)
+
+        if request.user and request.user.pk:
+            # No need to check if token exists because the user would not be able to call
+            # this endpoint if a token did in fact not exist
+            user_token = Token.objects.get(user=request.user.pk)
+            user_token.delete()
+            message = {
+                'message': 'Successfully logged out'
+            }
+            return Response(message, status=status.HTTP_200_OK)
+        else:
+            message = {
+                'message': 'Unable to find user in the request'
+            }
+            return Response(message, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
