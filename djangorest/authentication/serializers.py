@@ -2,6 +2,7 @@ from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 
 
+# TODO: Create a serializer that returns a user (first name, lastname, roles, company name) and a token
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
