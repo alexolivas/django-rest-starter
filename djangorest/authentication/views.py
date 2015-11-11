@@ -32,11 +32,7 @@ class LoginView(APIView):
 
                     # Serialize the user and token so the data can be passed back to the caller
                     serializer = TokenSerializer(user_token)
-                    if serializer.is_valid():
-                        return Response(serializer.data, status=status.HTTP_200_OK)
-                    else:
-                        # Something went wrong with the serialization, return 500 error
-                        return Response(serializer.data, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                    return Response(serializer.data, status=status.HTTP_200_OK)
                 else:
                     # This user is not active in the system
                     message = {'message': 'Account has been disabled.'}
