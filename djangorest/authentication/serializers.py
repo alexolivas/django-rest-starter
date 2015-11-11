@@ -1,15 +1,18 @@
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
 from rest_framework import serializers
+# TODO: Extend the user model and replace it here!!!!!!
 
 
-# TODO: Create a serializer that returns a user (first name, lastname, roles, company name) and a token
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('url', 'username', 'email', 'groups')
+        fields = ('username', 'email', 'first_name', 'last_name')
 
 
-class GroupSerializer(serializers.HyperlinkedModelSerializer):
+class TokenSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+
     class Meta:
-        model = Group
-        fields = ('url', 'name')
+        model = Token
+        fields = ('key', 'user')

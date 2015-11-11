@@ -5,6 +5,8 @@ from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate
+from serializers import TokenSerializer
+from django.core.exceptions import ObjectDoesNotExist
 
 
 class LoginView(APIView):
@@ -25,18 +27,26 @@ class LoginView(APIView):
             user = authenticate(username=username, password=password)
             if user is not None:
                 if user.is_active:
-                    # TODO: this is not JSON serializable > fixed by creating a serializable object
-                    # serializer_class = UserSerializer
-                    # TODO: Get the user's token, if one doesn't exist, create it (see below)
-                    # new_token = Token.objects.create(user=request.user)
-                    # user_token = Token.objects.get(user=user)
-                    message = {'message': 'Welcome!'}
-                    return Response(message, status=status.HTTP_200_OK)
+                    try:
+                        # Get the user's existing token, if one doesn't exist generate a new one
+                        user_token = Token.objects.get(user=user)
+                    except ObjectDoesNotExist:
+                        user_token = Token.objects.create(user=user)
+
+                    # Serialize the user and token so the data can be passed back to the caller
+                    serializer = TokenSerializer(user_token)
+                    if serializer.is_valid():
+                        return Response(serializer.data, status=status.HTTP_200_OK)
+                    else:
+                        # Something went wrong with the serialization, return 500 error
+                        return Response(serializer.data, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
                 else:
+                    # This user is not active in the system
                     message = {'message': 'Account has been disabled.'}
                     return Response(message, status=status.HTTP_401_UNAUTHORIZED)
             else:
-                message = {'message': 'Bad login credentials.'}
+                # Incorrect username/password combination
+                message = {'message': 'Invalid credentials.'}
                 return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
         message = {'message': 'Missing username and/or password.'}
