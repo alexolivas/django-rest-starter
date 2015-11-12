@@ -46,7 +46,7 @@ class CreateUserView(APIView):
 
 class EditUserView(APIView):
     """
-    This endpoint provides an admin user access to edit any other users in the system.
+    This endpoint provides an admin user access to edit any other accounts in the system.
 
     * Requires token authentication.
     * Requires user to be an admin
