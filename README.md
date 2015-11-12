@@ -75,5 +75,5 @@ and commit your changes. You now have a running bare bones Django project. Build
 To create apps inside the apps directory:
 ```bash
 mkdir apps/home
-python manage.py startapp home apps/home
+django-admin.py startapp home apps/home
 ```
