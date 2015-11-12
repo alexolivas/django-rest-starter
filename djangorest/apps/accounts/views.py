@@ -1,34 +1,47 @@
+from django.http import Http404
+from django.contrib.auth.models import User
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.authtoken.models import Token
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from django.contrib.auth import authenticate
-# from serializers import TokenSerializer
-# TODO: Create a util class that helps with all these functions
+from serializers import AccountSerializer
 
 
-class EditProfileView(APIView):
+class AccountDetail(APIView):
     """
-    This endpoint provides a user an interface to edit their own information
+    This endpoint provides a user an interface to manage their own account's profile information.
 
     * Requires token authentication.
     """
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 
-    def post(self, request, format=None):
+    def get_object(self, pk):
+        try:
+            return User.objects.get(pk=pk)
+        except User.DoesNotExist:
+            raise Http404
 
-        message = {
-            'message': 'Unable to find user in the request'
-        }
-        return Response(message, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    def get(self, request, pk, format=None):
+        # Get user account details
+        snippet = self.get_object(pk)
+        serializer = AccountSerializer(snippet)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        # Update fields on the account and save
+        snippet = self.get_object(pk)
+        serializer = AccountSerializer(snippet, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class CreateUserView(APIView):
+class AccountList(APIView):
     """
-    This endpoint provides an admin user an interface to create a new user in the system
+    This endpoint provides an admin user an interface to manage user accounts in their system.
 
     * Requires token authentication.
     * Requires user to be an admin
@@ -36,45 +49,15 @@ class CreateUserView(APIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated, IsAdminUser)
 
-    def post(self, request, format=None):
-
-        message = {
-            'message': 'Unable to find user in the request'
-        }
-        return Response(message, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
-class EditUserView(APIView):
-    """
-    This endpoint provides an admin user access to edit any other accounts in the system.
-
-    * Requires token authentication.
-    * Requires user to be an admin
-    """
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated, IsAdminUser)
+    def get(self, request, format=None):
+        # TODO: Implement options to only return certain users
+        users = User.objects.all()
+        serializer = AccountSerializer(users, many=True)
+        return Response(serializer.data)
 
     def post(self, request, format=None):
-
-        message = {
-            'message': 'Unable to find user in the request'
-        }
-        return Response(message, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
-class DeleteUserView(APIView):
-    """
-    This endpoint provides an admin user access to inactivate a user from the system.
-
-    * Requires token authentication.
-    * Requires user to be an admin
-    """
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated, IsAdminUser)
-
-    def post(self, request, format=None):
-
-        message = {
-            'message': 'Unable to find user in the request'
-        }
-        return Response(message, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        serializer = AccountSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

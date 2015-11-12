@@ -1,7 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from rest_framework import serializers
-# TODO: Extend the user model and replace it here!!!!!!
 
 
 class UserSerializer(serializers.ModelSerializer):
