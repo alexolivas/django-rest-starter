@@ -1,5 +1,7 @@
 from django.conf.urls import url
-from djangorest.authentication import views
+
+from djangorest.apps.authentication import views
+
 
 
 # Login is handled by curl -X POST http://localhost:8000/api-token-auth/ -d "password=admin&username=admin"??
