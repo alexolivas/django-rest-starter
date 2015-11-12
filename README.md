@@ -12,6 +12,11 @@ cd <project-name>
 git remote rm origin
 ```
 
+* Rename the project (can be different than the project directory name)
+```bash
+mv djangorest/ <project-name>
+```
+
 * Update the origin to your new git repository
 ```bash
 git remote add origin <your-projects-git-repo>
