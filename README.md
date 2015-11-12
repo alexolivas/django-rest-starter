@@ -69,7 +69,7 @@ python manage.py syncdb
 ```
 
 * Finally, generate a new secret key (using a tool like 1password) and update settings/development.py with it 
-and commit your changes. You now have a running bare bones Django project. Build away.
+and commit your changes. You now have a running bare bones DjangoRest project with token authentication. Build away.
 
 ## Notes
 To create apps inside the apps directory:
