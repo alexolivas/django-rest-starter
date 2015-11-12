@@ -28,6 +28,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'rest_framework.authtoken',
     'djangorest.apps.authentication',
+    'djangorest.apps.accounts',
 )
 
 MIDDLEWARE_CLASSES = (
