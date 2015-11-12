@@ -29,7 +29,7 @@ urlpatterns = [
     url(r'^v1/auth/', include(auth_urls)),
     url(r'^v1/users/', include(user_urls)),
     # url(r'^api-token-auth/', views.obtain_auth_token), # Automatically gets or generates new token
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')), # Gives Login Access to the Webapp
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),  # Gives Login Access to the Webapp
     url(r'^admin/', include(admin.site.urls)),
 ]
 
