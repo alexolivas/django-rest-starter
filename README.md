@@ -6,11 +6,6 @@
 git clone https://github.com/alexolivas/django-rest-skeleton.git <project-name>
 ```
 
-* Rename the project (can be different than the project directory name)
-```bash
-mv django-rest-skeleton/ <project-name>
-```
-
 * Remove the origin so that we can later set another GIT repository as the new origin 
 ```bash
 cd <project-name>
