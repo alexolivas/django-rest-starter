@@ -18,6 +18,8 @@ ALLOWED_HOSTS = []
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
+# TODO: Do not add your DB password here and commit to version control, keep it secret on the production server
+# TODO: just like the key
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',

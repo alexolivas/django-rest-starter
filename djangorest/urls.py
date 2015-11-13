@@ -1,6 +1,6 @@
 from django.conf.urls import include, url
 from django.contrib import admin
-from djangorest.apps.accounts import account_urls
+from apps.accounts import account_urls
 from rest_framework import routers
 
 from apps.authentication import auth_urls

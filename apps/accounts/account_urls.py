@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from rest_framework.urlpatterns import format_suffix_patterns
 
-from apps import views
+import views
 
 # TODO Change these to the real account views i.e. user_views, account_views
 # TODO What I am working on here is only needed for the CELLA project i.e. adding user_views, user_urls etc
