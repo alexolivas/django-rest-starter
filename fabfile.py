@@ -1,5 +1,3 @@
-__author__ = 'alexolivas'
-
 from fabric.api import local, hosts
 from fabric.colors import green
 
