@@ -13,7 +13,9 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# Settings are in their own directory, go up one level to get the project's base directory
+SETTINGS_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.abspath(os.path.join(SETTINGS_DIR, '..'))
 
 
 # Application definition
@@ -27,8 +29,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
-    'djangorest.apps.authentication',
-    'djangorest.apps.accounts',
+    'apps.authentication',
+    'apps.accounts',
 )
 
 MIDDLEWARE_CLASSES = (

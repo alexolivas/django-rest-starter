@@ -1,6 +1,6 @@
 from django.conf.urls import url
-from djangorest.apps.authentication import views
 
+from apps import views
 
 urlpatterns = [
     url(r'^login/', views.LoginView.as_view(), name='login'),
