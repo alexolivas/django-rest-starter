@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^v1/accounts/', include(account_urls)),
     # url(r'^api-token-auth/', views.obtain_auth_token), # Automatically gets or generates new token
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),  # Gives Login Access to the Webapp
+    url(r'^docs/', include('rest_framework_swagger.urls')),
     url(r'^admin/', include(admin.site.urls)),
 ]
 
