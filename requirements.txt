@@ -1,8 +1,11 @@
 Django==1.8.6
+Fabric==1.10.2
+PyYAML==3.11
+django-rest-swagger==0.3.4
 djangorestframework==3.3.1
 ecdsa==0.13
-Fabric==1.10.2
 paramiko==1.16.0
 pycrypto==2.6.1
 requests==2.8.1
 wheel==0.24.0
+wsgiref==0.1.2
