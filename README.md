@@ -19,6 +19,7 @@ mv djangorest/ <project-name>
 
 * Update the origin to your new git repository
 ```bash
+git add .
 git remote add origin <your-projects-git-repo>
 ```
 
