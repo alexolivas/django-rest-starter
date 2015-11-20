@@ -8,7 +8,7 @@ def deploy_development():
     local('export APP_SETTINGS=djangorest.settings.development')
     # local('python manage.py makemigrations')
     # local('python manage.py migrate')
-    local('python manage.py runserver')
+    local('python manage.py runserver 7000') # Run the server on port 7000
 
 
 @hosts('crinoid-stage.starfishsolutions.com')
