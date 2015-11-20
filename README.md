@@ -19,13 +19,13 @@ mv djangorest/ <project-name>
 
 * Update the origin to your new git repository
 ```bash
-git add .
 git remote add origin <your-projects-git-repo>
 ```
 
 * Push up the repo and its references for the first time
 ```bash
 git push -u origin --all
+git add .
 ```
 
 * Create a new virtual wrapper environment
