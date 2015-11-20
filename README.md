@@ -22,10 +22,10 @@ mv djangorest/ <project-name>
 git remote add origin <your-projects-git-repo>
 ```
 
-* Initial Commit to your repository
+* Push up the repo and its references for the first time
 ```bash
+git push -u origin --all
 git add .
-git commit -m "Initial Commit"
 ```
 
 * Create a new virtual wrapper environment
