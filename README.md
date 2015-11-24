@@ -1,5 +1,5 @@
 # django-rest-skeleton
-This project serves as a starting point to build a Django REST web service. This project ships with token based authentication but can be modified to use any other [authentication schemes](http://www.django-rest-framework.org/api-guide/authentication/).
+This project serves as a starting point to build a [Django REST](http://www.django-rest-framework.org) web service. This project ships with token based authentication but can be modified to use any other [authentication schemes](http://www.django-rest-framework.org/api-guide/authentication/).
 
 ## Table of Contents
 
