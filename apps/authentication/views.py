@@ -4,6 +4,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.throttling import AnonRateThrottle
 from django.contrib.auth import authenticate
 from serializers import TokenSerializer
 
@@ -16,6 +17,7 @@ class LoginView(APIView):
     """
     authentication_classes = ()
     permission_classes = ()
+    throttle_classes = (AnonRateThrottle,)
 
     def post(self, request, format=None):
         if 'username' in request.POST and 'password' in request.POST:
