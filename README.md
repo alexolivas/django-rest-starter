@@ -53,7 +53,7 @@ git clone https://github.com/alexolivas/django-rest-skeleton.git
 
 * Create a new virtual wrapper environment
 ```bash
-mkvirtualenv <project-name>
+mkvirtualenv django-rest-skeleton
 ```
 
 * Install the requirements
