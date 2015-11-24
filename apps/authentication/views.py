@@ -6,6 +6,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.throttling import AnonRateThrottle
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
 from serializers import TokenSerializer
 
 
@@ -24,8 +25,11 @@ class LoginView(APIView):
             username = request.POST.get('username')
             password = request.POST.get('password')
 
-            # Use django's built in authentication
-            user = authenticate(username=username, password=password)
+            # Un-comment to Use django's built in authentication when username is not an email
+            # user = authenticate(username=username, password=password)
+
+            # We are using email as the username, authenticate with that instead of the username
+            user = self.authenticate_by_email(username, password)
             if user is not None:
                 if user.is_active:
 
@@ -34,6 +38,7 @@ class LoginView(APIView):
 
                     # Serialize the user and token so the data can be passed back to the caller
                     serializer = TokenSerializer(user_token)
+
                     return Response(serializer.data, status=status.HTTP_200_OK)
                 else:
                     # This user is not active in the system
@@ -46,6 +51,24 @@ class LoginView(APIView):
 
         message = {'message': 'Missing username and/or password.'}
         return Response(message, status=status.HTTP_400_BAD_REQUEST)
+
+    def authenticate_by_email(self, email, password):
+        # We are using an email as the username, so we can't use django's built in authentication,
+        # Let's authenticate by grabbing the user by email and checking the password
+        try:
+            # Grab the user by email, once we have the user we will pass in the username
+            # to django's built in authentication system
+            user_object = User.objects.get(email=email)
+
+            # Use django's built in authentication
+            user = authenticate(username=user_object.username, password=password)
+
+            if user is not None:
+                return user
+            else:
+                return None
+        except User.DoesNotExist:
+            return None
 
 
 class LogoutView(APIView):
