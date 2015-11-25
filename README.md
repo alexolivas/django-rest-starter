@@ -1,7 +1,80 @@
-# django-rest-skeleton
+# Skeleton for Django REST Web Services
+This project serves as a starting point to build a [Django REST](http://www.django-rest-framework.org) web service. This project ships with token based authentication but can be modified to use any other [authentication schemes](http://www.django-rest-framework.org/api-guide/authentication/).
 
-## Getting Started
-* Clone the project
+## Table of Contents
+
+- [Pre Requisites](#pre-requisites)
+- [Getting Started](#getting-started)
+- [Starting New Project](#starting-a-new-project)
+- [Notes](#notes)
+
+-------
+# Pre Requisites
+It is recommended that you create a virtual environment to install the project's dependencies without having to worry about clashing dependencies with other python projects.
+* If you haven't installed virtualenv do so via pip
+```bash
+pip install virtualenv
+```
+
+* Install virtualenvwrapper
+```bash
+pip install virtualenvwrapper
+```
+
+* Create a directory to store details of your future virtual environments (this can be whatever location you'd like but remember it for the next step).
+```bash
+cd ~
+mkdir .virtualenvs
+mkdir Development/
+```
+
+* Edit the bash profile (create it if it doesn't exist)
+```bash
+vi ~/.bash_profile
+```
+
+Add the following to your bash_profile
+```
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/Development/
+source /usr/local/bin/virtualenvwrapper.sh
+```
+
+* Run the following command to verify that the virtual environment wrapper was successfully installed, it should spit out the options related to it
+```bash
+mkvirtualenv
+```
+
+# Getting Started
+* To get this project running locally on your computer, first clone it
+```bash
+git clone https://github.com/alexolivas/django-rest-skeleton.git
+```
+
+* Create a new virtual wrapper environment
+```bash
+mkvirtualenv django-rest-skeleton
+```
+
+* Install the requirements
+```bash
+pip install -r requirements.txt
+```
+
+* Run the initial database migrations
+```bash
+python manage.py migrate
+```
+
+* Create an admin user (optional)
+```bash
+python manage.py syncdb
+```
+
+# Starting a New Project
+If you want to clone this project and use it as a starting point for a new project first:
+
+* Clone the project with a different name
 ```bash
 git clone https://github.com/alexolivas/django-rest-skeleton.git <project-name>
 ```
@@ -66,7 +139,7 @@ python manage.py syncdb
 * Finally, generate a new secret key (using a tool like 1password) and update settings/development.py with it 
 and commit your changes. You now have a running bare bones DjangoRest project with token authentication. Build away.
 
-## Notes
+# Notes
 To create apps inside the apps directory:
 ```bash
 mkdir apps/home
