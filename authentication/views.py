@@ -6,7 +6,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.throttling import AnonRateThrottle
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import User
+from accounts.models import UserAccountSetup
 from serializers import TokenSerializer
 
 
@@ -25,16 +25,17 @@ class LoginView(APIView):
             username = request.POST.get('username')
             password = request.POST.get('password')
 
-            # Un-comment to Use django's built in authentication when username is not an email
-            # user = authenticate(username=username, password=password)
-
             # We are using email as the username, authenticate with that instead of the username
-            user = self.authenticate_by_email(username, password)
-            if user is not None:
-                if user.is_active:
+            user_account = self.authenticate_by_email(username, password)
+            if user_account is not None:
+                # print 'is user active: ' + user.is_active
+                if user_account.user.is_active:
+
+                    # TODO: I'm going to split up the login into 2 steps, 1 for authentication to get the key
+                    # TODO: and 2 once I get the key I will get the user's basic details
 
                     # Get the user's existing token, if one doesn't exist generate a new one
-                    user_token, created = Token.objects.get_or_create(user=user)
+                    user_token, created = Token.objects.get_or_create(user=user_account.user)
 
                     # Serialize the user and token so the data can be passed back to the caller
                     serializer = TokenSerializer(user_token)
@@ -58,16 +59,18 @@ class LoginView(APIView):
         try:
             # Grab the user by email, once we have the user we will pass in the username
             # to django's built in authentication system
-            user_object = User.objects.get(email=email)
+            user_account = UserAccountSetup.objects.get(user__email=email)
 
             # Use django's built in authentication
-            user = authenticate(username=user_object.username, password=password)
+            user = authenticate(username=user_account.user.username, password=password)
 
             if user is not None:
-                return user
+                return user_account
             else:
                 return None
-        except User.DoesNotExist:
+        except UserAccountSetup.DoesNotExist:
+            # TODO: Return JSON that front-end can read?
+            print 'User Account not setup for login'
             return None
 
 

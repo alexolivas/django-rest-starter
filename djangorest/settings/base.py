@@ -31,9 +31,11 @@ INSTALLED_APPS = (
     'rest_framework_swagger',
     'rest_framework.authtoken',
     'corsheaders',
-    'apps.authentication',
-    'apps.accounts',
+    'authentication',
+    'accounts',
 )
+
+# AUTH_USER_MODEL = 'users.UserAccount'
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',

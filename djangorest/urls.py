@@ -1,9 +1,10 @@
 from django.conf.urls import include, url
 from django.contrib import admin
-from apps.accounts import account_urls
+from accounts import user_urls
 from rest_framework import routers
 
-from apps.authentication import auth_urls
+from authentication import auth_urls
+from admin import admin_urls
 
 router = routers.DefaultRouter()
 
@@ -12,9 +13,10 @@ router = routers.DefaultRouter()
 urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^v1/auth/', include(auth_urls)),
-    url(r'^v1/accounts/', include(account_urls)),
-    # url(r'^api-token-auth/', views.obtain_auth_token), # Automatically gets or generates new token
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),  # Gives Login Access to the Webapp
+    url(r'^v1/users/', include(user_urls)),
+    # url(r'^v1/admin/', include(admin_urls)),
+
+    # url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),  # Gives Login Access to the Webapp
     url(r'^docs/', include('rest_framework_swagger.urls')),
     url(r'^admin/', include(admin.site.urls)),
 ]
