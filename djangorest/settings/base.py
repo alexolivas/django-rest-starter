@@ -31,6 +31,7 @@ INSTALLED_APPS = (
     'rest_framework_swagger',
     'rest_framework.authtoken',
     'corsheaders',
+    'system',
     'authentication',
     'accounts',
 )
