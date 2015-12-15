@@ -14,7 +14,7 @@ from system.models import SystemPreferences
 from system.serializers import SystemPreferencesSerializer
 
 
-class LoginView(APIView):
+class Login(APIView):
     """
     This endpoint generates a new token effectively granting a user access to the system
 
@@ -120,9 +120,9 @@ class LoginView(APIView):
                 return None
 
 
-class LogoutView(APIView):
+class Logout(APIView):
     """
-    This endpoint revokes a user's token effectively revoking their access to the system
+    This endpoint revokes a user's token effectively logging them out of the system
 
     * Requires token authentication.
     """
