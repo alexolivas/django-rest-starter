@@ -2,11 +2,6 @@ from rest_framework.authtoken.models import Token
 from rest_framework import serializers
 from accounts.models import Client, User, ClientMembership
 
-"""
-This serializer file contains metadata information providing a minimal amount of data when
-authenticating into the system, such as names and IDs.
-"""
-
 
 class ClientMetadataSerializer(serializers.ModelSerializer):
     class Meta:
