@@ -4,7 +4,6 @@ from accounts import user_urls
 from rest_framework import routers
 
 from authentication import auth_urls
-from admin import admin_urls
 
 router = routers.DefaultRouter()
 

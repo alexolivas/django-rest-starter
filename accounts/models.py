@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 
 
 class Client(models.Model):
+    created_date = models.DateTimeField(auto_now_add=True, editable=False)
+    updated_date = models.DateTimeField(auto_now=True, editable=False)
     name = models.CharField(max_length=150, unique=True)
     active = models.BooleanField(default=True)
     address_1 = models.CharField(max_length=150, blank=True)
@@ -14,40 +16,37 @@ class Client(models.Model):
     class Meta:
         verbose_name = 'Client'
         verbose_name_plural = 'Clients'
+        db_table = 'client'
 
     def __unicode__(self):
         return self.name
 
 
-class UserAccountSetup(models.Model):
+class UserPreferences(models.Model):
+    created_date = models.DateTimeField(auto_now_add=True, editable=False)
+    updated_date = models.DateTimeField(auto_now=True, editable=False)
     user = models.OneToOneField(User, unique=True)
-    client = models.ManyToManyField(Client, blank=True)
-
-    # USERNAME_FIELD = 'email'
-    # REQUIRED_FIELDS = ['email']
-
-    # TODO ##########################################
-    # TODO ##########################################
-    # TODO: Remove the client and user app
-    # TODO ##########################################
-    # TODO ##########################################
+    date_format = models.CharField(max_length=25, default='M/dd/yyyy')
+    time_format = models.CharField(max_length=25, default='HH:mm:ss')
 
     class Meta:
-        verbose_name = 'User Account Setup'
-        verbose_name_plural = 'User Account Setup'
+        verbose_name = 'User Preferences'
+        verbose_name_plural = 'User Preferences'
+        db_table = 'user_preferences'
 
     def __unicode__(self):
         return self.user.email
 
 
-# TODO: We don't necessarily need to return all data with one API call, we can make the UI make 2 calls
-# This is where we could potentially add user specific settings i.e. timezone preference, custom date format, language
-# class UserProfile(models.Model):
-#     user = models.OneToOneField(User, unique=True)
-#
-#     class Meta:
-#         verbose_name = 'User Profile'
-#         verbose_name_plural = 'User Profiles'
-#
-#     def __unicode__(self):
-#         return self.user.email
+class ClientMembership(models.Model):
+    created_date = models.DateTimeField(auto_now_add=True, editable=False)
+    updated_date = models.DateTimeField(auto_now=True, editable=False)
+    user = models.OneToOneField(User, unique=True)
+    client = models.OneToOneField(Client, blank=True)
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        db_table = 'client_membership'
+
+    def __unicode__(self):
+        return self.user.email

@@ -1,31 +1,40 @@
 from django.contrib.auth.models import User
-from models import UserAccountSetup
-from accounts.models import Client
+from models import UserPreferences
+from accounts.models import Client, ClientMembership
 from rest_framework import serializers
-from authentication.serializers import TokenSerializer
 
 
-class ClientSerializer(serializers.ModelSerializer):
+# class ClientSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Client
+#         fields = ('id', 'name')
+#         read_only_fields = ('created_date', 'updated_date')
+#
+#
+# class UserSerializer(serializers.ModelSerializer):
+#     # client = ClientSerializer(many=True)
+#     # is_admin = serializers.SerializerMethodField()
+#
+#     class Meta:
+#         model = User
+#         fields = ('username', 'email', 'first_name', 'last_name', 'date_joined')
+#
+#
+# class ClientMemberSerializer(serializers.ModelSerializer):
+#     client = ClientSerializer()
+#
+#     class Meta:
+#         model = ClientMembership
+#         read_only_fields = ('created_date', 'updated_date')
+
+
+class UserPreferencesSerializer(serializers.ModelSerializer):
+
     class Meta:
-        model = Client
-        fields = ('id', 'name')
-
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'groups')
-
-
-class UserAccountSetupSerializer(serializers.Serializer):
-    user = UserSerializer()
-    client = ClientSerializer()
-    # token = TokenSerializer()
-
-    class Meta:
-        # model = UserAccount
-        fields = ('user', 'client')
-
+        model = UserPreferences
+        exclude = ('id', 'user', 'created_date', 'updated_date')
+        # fields = ('date_format', 'time_format', 'client', 'is_client')
+        # fields = ('client', 'is_admin', 'date_format', 'time_format')
 
 # TODO: Create a user group serializer that returns booleans
 # class UserGroupSerializer(serializers.Serializer):
