@@ -1,10 +1,10 @@
 from django.conf.urls import url
 import views
-# from apps.authentication import views
 
 
-# url(r'^profile/(?P<pk>[0-9]+)/$', views.AccountDetail.as_view(), name='profile'),
 urlpatterns = [
-    # url(r'^logindetails/', views.UserLoginDetails.as_view(), name='login_details'),
-    url(r'^details/', views.UserAccountDetails.as_view(), name='details'),
+    url(r'^details/', views.UserDetails.as_view(), name='details'),
+    # url(r'^details/(?P<pk>[0-9]+)/$', views.UserDetails.as_view(), name='details'),
+    url(r'^preferences/', views.UserPreferencesView.as_view(), name='preferences'),
+    url(r'^upload/', views.FileUploadView.as_view(), name='file_upload'),
 ]
