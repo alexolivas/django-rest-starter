@@ -4,24 +4,8 @@ from fabric.colors import green
 
 
 @task
-def clean_build_dev():
-    print(green("running a clean development build.."))
-    local('gulp clean-dev')
-    local('gulp build-dev')
-
-
-@task
-def clean_watch_dev():
-    print(green("watching a development build of the website.."))
-    local('gulp clean-dev')
-    local('gulp watch-dev')
-
-
-@task
 def test_deploy_dev_build():
     print(green("starting the server with a clean development build.."))
-    local('gulp clean-dev')
-    local('gulp build-dev')
     local('export APP_SETTINGS=djangorest.settings.development')
     local('python manage.py runserver')
 
@@ -40,25 +24,9 @@ def refresh_database():
 
 
 @task
-def clean_build_prod():
-    print(green("running a clean production build.."))
-    local('gulp clean-prod')
-    local('gulp build-prod')
-
-
-@task
-def clean_watch_prod():
-    print(green("watching a production build of the website.."))
-    local('gulp clean-prod')
-    local('gulp watch-prod')
-
-
-@task
 def test_deploy_prod_build():
     # Used to test a production build before it is pushed out to a live production environment
     print(green("starting the local server with a clean production build.."))
-    local('gulp clean-prod')
-    local('gulp build-prod')
     # local('export APP_SETTINGS=djangorest.settings.production')
     local('python manage.py runserver --settings=django_website_skeleton.settings.production')
 
