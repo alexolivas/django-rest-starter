@@ -4,11 +4,10 @@ from models import Client
 from models import ClientMembership
 
 
-class UserAccountSetupAdmin(admin.ModelAdmin):
+class UserPreferencesAdmin(admin.ModelAdmin):
     list_display = ('user',)
     list_filter = ('user__is_active', 'created_date', 'updated_date')
-    # exclude = ('user_permissions', 'last_login', 'date_joined')
-admin.site.register(UserPreferences, UserAccountSetupAdmin)
+admin.site.register(UserPreferences, UserPreferencesAdmin)
 
 
 class ClientAdmin(admin.ModelAdmin):
@@ -17,4 +16,7 @@ class ClientAdmin(admin.ModelAdmin):
 admin.site.register(Client, ClientAdmin)
 
 
-admin.site.register(ClientMembership)
+class ClientMembershipAdmin(admin.ModelAdmin):
+    list_display = ('user', 'client', 'active')
+    list_filter = ('client', 'active')
+admin.site.register(ClientMembership, ClientMembershipAdmin)
