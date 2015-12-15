@@ -13,8 +13,8 @@ def test_deploy_dev_build():
 @task
 def backup_database():
     print(green("backing up the database.."))
-    local('rm -r resources/db/refresh.json')
-    local('./manage.py dumpdata > resources/db/refresh.json')
+    local('rm -r djangorest/resources/db/refresh.json')
+    local('./manage.py dumpdata > djangorest/resources/db/refresh.json')
 
 
 @task
