@@ -3,11 +3,11 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.throttling import AnonRateThrottle
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
-from serializers import TokenSerializer, ClientMemberSerializer
+from serializers import TokenSerializer, ClientMemberSerializer, LoginSerializer
 from accounts.models import ClientMembership, UserPreferences
 from accounts.serializers import UserPreferencesSerializer
 from system.models import SystemPreferences
@@ -21,32 +21,21 @@ class LoginView(APIView):
     * This API doesn't require authentication or permission
     """
     authentication_classes = ()
-    permission_classes = ()
+    permission_classes = (AllowAny,)
     throttle_classes = (AnonRateThrottle,)
+    serializer_class = LoginSerializer
+
+    def get_serializer_class(self):
+        return self.serializer_class
 
     def post(self, request, format=None):
-        """
-        username -- A first parameter
-        password -- A second parameter
-        parameters:
-            - username: username
-              description: user's email address
-              required: true
-              type: string
-              paramType: form
-            - password: password
-              description: user's password
-              required: true
-              type: string
-        """
-        if 'username' in request.POST and 'password' in request.POST:
-            username = request.POST.get('username')
+        if 'email' in request.POST and 'password' in request.POST:
+            email = request.POST.get('email')
             password = request.POST.get('password')
 
             # We are using email as the username, authenticate with that instead of the username
-            user = self.authenticate_by_email(username, password)
+            user = self.authenticate_by_email(email, password)
             if user is not None:
-                # print 'is user active: ' + user.is_active
                 if user.is_active:
                     # Get the user's existing token, if one doesn't exist generate a new one
                     user_token, created = Token.objects.get_or_create(user=user)

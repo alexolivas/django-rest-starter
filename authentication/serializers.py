@@ -3,6 +3,11 @@ from rest_framework import serializers
 from accounts.models import Client, User, ClientMembership
 
 
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField()
+
+
 class ClientMetadataSerializer(serializers.ModelSerializer):
     class Meta:
         model = Client
