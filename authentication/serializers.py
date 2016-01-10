@@ -16,27 +16,28 @@ class ClientMetadataSerializer(serializers.ModelSerializer):
 
 
 class UserMetadataSerializer(serializers.ModelSerializer):
-    is_staff = serializers.SerializerMethodField()
+    is_warehouse_employee = serializers.SerializerMethodField()
     is_admin = serializers.SerializerMethodField()
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name', 'date_joined', 'is_staff', 'is_admin')
+        fields = ('username', 'email', 'first_name', 'last_name', 'date_joined', 'is_warehouse_employee', 'is_admin')
 
-    def get_is_staff(self, user):
+    @staticmethod
+    def get_is_warehouse_employee(user):
         if user.is_superuser:
             # Ignore this logic if the user is an admin
             return False
         else:
-            is_staff = False
+            is_warehouse_employee = False
             for group in user.groups.all():
-                print str(group.name).lower()
-                if str(group.name).lower() == 'staff':
-                    is_staff = True
+                if str(group.name).lower() == 'warehouse employees':
+                    is_warehouse_employee = True
                     break
-            return is_staff
+            return is_warehouse_employee
 
-    def get_is_admin(self, user):
+    @staticmethod
+    def get_is_admin(user):
         # If they are superusers then they are admins by default
         return user.is_superuser
 

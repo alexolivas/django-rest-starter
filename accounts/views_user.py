@@ -4,16 +4,17 @@ from rest_framework import status
 from rest_framework.parsers import FileUploadParser
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-from serializers import UserSerializer
+from serializers import UserBasicInfoSerializer, UserDetailedInfoSerializer
 from system.models import SystemPreferences
 from system.serializers import SystemPreferencesSerializer
 from models import UserPreferences
 from serializers import UserPreferencesSerializer
+from system.permissions import ManageUsersPermission
 
 
-class UserDetails(APIView):
+class MyProfile(APIView):
     """
-    This endpoint provides any user an interface to manage their own account's details.
+    This endpoint provides users an interface to manage their own account's details.
 
     * Uses token authentication.
     * Requires user to be authenticated.
@@ -24,8 +25,7 @@ class UserDetails(APIView):
     def get(self, request, format=None):
         user = self.request.user
         if user is not None:
-            serializer = UserSerializer(user)
-            print serializer.data
+            serializer = UserBasicInfoSerializer(user)
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             message = {'message': 'User data not in the request.'}
@@ -42,6 +42,27 @@ class UserDetails(APIView):
     #     else:
     #         message = {'message': 'User data not in the request.'}
     #         return Response(message, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserDetails(APIView):
+    """
+    This endpoint provides an interface for users with the "manage users" permission
+    to manage user account details.
+
+    * Uses token authentication.
+    * Requires user to be authenticated.
+    """
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated, ManageUsersPermission)
+
+    def get(self, request, format=None):
+        user = self.request.user
+        if user is not None:
+            serializer = UserDetailedInfoSerializer(user)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            message = {'message': 'User data not in the request.'}
+            return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserPreferencesView(APIView):
