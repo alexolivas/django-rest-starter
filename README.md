@@ -69,7 +69,8 @@ python manage.py migrate
 
 * Refresh the database
 ```bash
-./manage.py loaddata djangorest/resources/db/refresh.json 
+fab refresh_database
+fab test_deploy_dev_build
 ```
 
 # Starting a New Project
