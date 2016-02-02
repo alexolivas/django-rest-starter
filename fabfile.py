@@ -1,77 +1,66 @@
 from fabric.api import local, hosts, task
-from fabric.operations import run, env
 from fabric.colors import green
 
 
 @task
-def test_deploy_dev_build():
-    print(green("starting the server with a clean development build.."))
-    local('export APP_SETTINGS=djangorest.settings.development')
-    local('python manage.py runserver')
+def dev():
+    print(green("******** initializing a clean development environment ********"))
+    collect_static()
+    migrate_db()
+    refresh_database()
 
 
 @task
-def backup_database():
-    print(green("backing up the database.."))
-    local('rm -r djangorest/resources/db/refresh.json')
-    local('./manage.py dumpdata > djangorest/resources/db/refresh.json')
+def deploy():
+    print(green("******** initializing production environment deployment test ********"))
+    test()
+    migrate_db()
+
+
+@task
+def install_requirements():
+    print(green("installing project requirements.."))
+    local('pip install -r requirements.txt')
+
+
+@task
+def migrate_db():
+    print(green("applying database migrations.."))
+    local('python manage.py makemigrations')
+    local('python manage.py migrate')
 
 
 @task
 def refresh_database():
     print(green("restoring the database from the last backup.."))
-    local('./manage.py loaddata resources/db/refresh.json')
+    local('./manage.py loaddata django_website_skeleton/resources/db/refresh.json')
 
 
 @task
-def test_deploy_prod_build():
-    # Used to test a production build before it is pushed out to a live production environment
-    print(green("starting the local server with a clean production build.."))
-    # local('export APP_SETTINGS=djangorest.settings.production')
-    local('python manage.py runserver --settings=django_website_skeleton.settings.production')
+def collect_static():
+    print(green("collecting static files.."))
+    local('python manage.py collectstatic --noinput')
 
 
-@hosts('sandbox1.webfactional.com')
 @task
-def stop_production_server():
-    # TODO: Stop the server
-    env.user = 'sandbox1'
-    print(green("stopping the application server.."))
+def backup_database():
+    print(green("backing up the database.."))
+    local('rm -r django_website_skeleton/resources/db/refresh.json')
+    local('./manage.py dumpdata > django_website_skeleton/resources/db/refresh.json')
 
 
-@hosts('sandbox1.webfactional.com')
 @task
-def start_production_server():
-    # TODO: Stop the server
-    env.user = 'sandbox1'
-    print(green("starting the application server.."))
+def start_gunicorn():
+    print(green("starting the gunicorn server with a clean development build.."))
+    local('foreman start')
 
 
-@hosts('sandbox1.webfactional.com')
 @task
-def run_production_build():
-    # Follow https://www.caktusgroup.com/blog/2010/04/22/basic-django-deployment-with-virtualenv-fabric-pip-and-rsync/
-
-    # TODO: Pull the latest from git
-    # TODO: Install requirements.txt dependencies
-    # TODO: Make migrations
-    # TODO: migrate
-    # TODO: Run a clean build > reference "fab clean_build_prod"
-
-    env.user = 'sandbox1'
-    print(green("starting the local server with a clean production build.."))
-    run('cd webapps')
-    run('ls')
+def start_webserver():
+    print(green("starting the django web server with a clean development build.."))
+    local('python manage.py runserver')
 
 
-@hosts('sandbox1.webfactional.com')
 @task
-def deploy():
-    env.user = 'sandbox1'
-    # TODO: Stop the server
-    # run_production_build()
-    # TODO: Move the contents of "static_prod" to "~/webapps/<django_static>"
-    # TODO: set production settings: local('export APP_SETTINGS=djangorest.settings.production')
-    # TODO: Restart the server
-    print(green("starting the local server with a clean production build.."))
-    run('cd webapps')
+def test():
+    local('python manage.py test')
