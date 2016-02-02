@@ -18,6 +18,9 @@ box: python:2.7
 build:
   # The steps that will be executed on build
   steps:
+    # Create virtual environment
+    - virtualenv
+
     # Install python dependencies
     - pip-install
 
