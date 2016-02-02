@@ -17,9 +17,6 @@ box: python:2.7-slim
 build:
   # The steps that will be executed on build
   steps:
-    - virtualenv:
-        name: setup virtual environment
-
     # Install python dependencies
     - pip-install
 
