@@ -7,8 +7,8 @@ This project serves as a starting point to build a [Django REST](http://www.djan
 
 - [Pre Requisites](#pre-requisites)
 - [Getting Started](#getting-started)
-- [Starting New Project](#starting-a-new-project)
-- [Notes](#notes)
+- [Fab Tasks](#fab-tasks)
+- [Wercker/Heroku Support](#wercker-and-heroku-support)
 
 -------
 # Pre Requisites
@@ -47,6 +47,18 @@ source /usr/local/bin/virtualenvwrapper.sh
 mkvirtualenv
 ```
 
+* Last step to be able to work with virtualenvwrapper and environment variables.
+```bash
+vi ~/.virtualenvs/postactivate
+```
+
+* Add the following code snippet inside postactivate so that the project's environment variables are available on activate
+```
+set -a
+. .env
+set +a
+```
+
 # Getting Started
 * To get this project running locally on your computer, first clone it
 ```bash
@@ -58,21 +70,31 @@ git clone https://github.com/alexolivas/django-rest-skeleton.git
 mkvirtualenv django-rest-skeleton
 ```
 
+* Create an environment variables file
+```bash
+vi .env
+```
+
+* Populate it with the following (generate the SECRET_KEY with a tool like 1password: 50 characters)
+```
+SECRET_KEY='XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+DEBUG=True
+DATABASE_URL='postgres://postgres@localhost:5432/<db_name>'
+```
+
 * Install the requirements
 ```bash
 pip install -r requirements.txt
 ```
 
-* Run the initial database migrations
+* Install the project's requirements
 ```bash
-python manage.py makemigrations
-python manage.py migrate
+pip install -r requirements.txt
 ```
 
-* Refresh the database
+* Run the fab task to initialize your environment with a clean database (creates admin user with credentials admin/admin)
 ```bash
-fab refresh_database
-fab test_deploy_dev_build
+fab dev
 ```
 
 # Starting a New Project
@@ -89,15 +111,15 @@ cd <project-name>
 git remote rm origin
 ```
 
-* Rename the project (can be different than the project directory name)
-```bash
-mv djangorest/ <project-name>
-```
-
 * Update the origin to your new git repository and push the changes
 ```bash
 git remote add origin <your-projects-git-repo>
-git push -u origin master
+git push -u origin --all
+```
+
+* Rename the project (can be different than the project directory name)
+```bash
+mv django_website_skeleton/ <project-name>
 ```
 
 * Create a new virtual wrapper environment
@@ -105,40 +127,136 @@ git push -u origin master
 mkvirtualenv <project-name>
 ```
 
-* Install the requirements
+* Delete the database refresh json file (contains data that pertains to the django-website-skeleton project)
 ```bash
-pip install -r requirements.txt
+rm -rf <project-name>/resources/db/refresh.json
 ```
 
 * Replace the original project's name with your project (same name as in step 3) in manage.py
 ```bash
-perl -pi -e 's/djangorest/<project-name>/g' manage.py 
+perl -pi -e 's/django_website_skeleton/<project-name>/g' manage.py 
 ```
 
 * Do the exact same thing (same name as in step 3) to the wsgi.py file
 ```bash
-perl -pi -e 's/djangorest/<project-name>/g' <project-name>/wsgi.py
+perl -pi -e 's/django_website_skeleton/<project-name>/g' <project-name>/wsgi.py
 ```
 
-* One last search and replace: now in the base settings file
-```bash
-perl -pi -e 's/djangorest/<project-name>/g' <project-name>/settings/base.py
-```
+* Do a final search/replace of django_website_skeleton to replace with your project's name using your IDE's search/replace feature.
 
-* Commit your project name changes
+* Commit your project's name changes
 ```bash
 git commit -a -m "Renamed Project"
 ```
 
-* Run the initial database migrations
+* Create an environment variables file
 ```bash
-python manage.py migrate
+vi .env
 ```
 
-* Create an admin user (optional)
-```bash
-python manage.py syncdb
+* Populate it with the following (generate the SECRET_KEY with a tool like 1password: 50 characters)
+```
+SECRET_KEY='XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+DEBUG=True
+DATABASE_URL='postgres://postgres@localhost:5432/<db_name>'
 ```
 
-* Finally, generate a new secret key (using a tool like 1password) and update settings/development.py with it 
-and commit your changes. You now have a running bare bones DjangoRest project with token authentication. Build away.
+* Install the project's requirements
+```bash
+pip install -r requirements.txt
+```
+
+* Run the following tasks to initialize your new project's environment
+```bash
+fab migrate_db
+```
+
+# Fab Tasks
+* Start a local web server, using gunicorn (http://0.0.0.0:5000). Use this task to test the system running in a gunicorn (heroku-like) environment
+```bash
+fab start_gunicorn
+```
+
+* Install the project's requirements
+```bash
+fab install_requirements
+```
+
+* Apply database migrations
+```bash
+fab migrate_db
+```
+
+* Collect static files using django's collectstatic command
+```bash
+fab collect_static
+```
+
+* Restore the database to a clean state
+```bash
+fab refresh_database
+```
+
+* Create a backup of the database in it's current state
+```bash
+fab backup_database
+```
+
+* Generate a new dev static resources build
+```bash
+fab clean_build_dev
+```
+
+* Start a node server watching for changes to static assets
+```bash
+fab watch_dev
+```
+
+* Run python tests
+```bash
+fab test
+```
+
+# Wercker And Heroku Support
+[Wercker](http://devcenter.wercker.com/index.html) is a build automation tool that can be used to build and deploy your apps in containers.
+[Heroku](https://www.heroku.com) is a cloud Platform-as-a-Service supporting several programming languages. 
+
+## Wercker
+* Login to wercker website
+* Navigate to your project's settings
+* Create a new deploy target
+* Add the following environment variables (inside the target) > HEROKU_USER, HEROKU_APP_NAME, HEROKU_KEY, HEROKU_KEY_PAIR
+* The heroku_key_pair should be generate in SSH_KEYS. [Click here](http://devcenter.wercker.com/quickstarts/deployment/heroku.html) for a complete step-by-step tutorial.
+
+## Heroku
+* Login to the heroku website.
+* Copy the public key you generated in wercker and add it to heroku (manage account > SSH Keys)
+* Go into the project > settings > add the following config variables > DATABASE_URL, DEBUG (don't add this if production), SECRET_KEY
+* Open up your terminal and login
+```bash
+heroku login
+```
+
+* Set the heroku repo as a remote
+```bash
+heroku git:remote -a <heroku-project-name>
+```
+
+* Add nodejs and python buildpacks so heroku knows what to build
+```bash
+heroku buildpacks:add heroku/python
+```
+
+* Run a test production deployment on your local environment to simulate the system running with production settings in a gunicorn (heroku-like) environment 
+```bash
+pip install -r requirements.txt
+fab test_prod_deploy
+fab start_gunicorn
+```
+
+* To deploy using heroku CLI instead of wercker use
+```bash
+git push heroku master
+```
+
+For complete documentation on heroku + django go to https://devcenter.heroku.com/articles/django-app-configuration.
