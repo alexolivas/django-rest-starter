@@ -15,24 +15,25 @@ This project serves as a starting point to build a [Django REST](http://www.djan
 -------
 # Pre Requisites
 It is recommended that you create a virtual environment to install the project's dependencies without having to worry about clashing dependencies with other python projects.
-* If you haven't installed virtualenv do so via pip
+
+If you haven't installed virtualenv do so via pip
 ```bash
 pip install virtualenv
 ```
 
-* Install virtualenvwrapper
+Install virtualenvwrapper
 ```bash
 pip install virtualenvwrapper
 ```
 
-* Create a directory to store details of your future virtual environments (this can be whatever location you'd like but remember it for the next step).
+Create a directory to store details of your future virtual environments (this can be whatever location you'd like but remember it for the next step).
 ```bash
 cd ~
 mkdir .virtualenvs
 mkdir Development/
 ```
 
-* Edit the bash profile (create it if it doesn't exist)
+Edit the bash profile (create it if it doesn't exist)
 ```bash
 vi ~/.bash_profile
 ```
@@ -44,17 +45,17 @@ export PROJECT_HOME=$HOME/Development/
 source /usr/local/bin/virtualenvwrapper.sh
 ```
 
-* Run the following command to verify that the virtual environment wrapper was successfully installed, it should spit out the options related to it
+Run the following command to verify that the virtual environment wrapper was successfully installed, it should spit out the options related to it
 ```bash
 mkvirtualenv
 ```
 
-* Last step to be able to work with virtualenvwrapper and environment variables.
+Last step to be able to work with virtualenvwrapper and environment variables.
 ```bash
 vi ~/.virtualenvs/postactivate
 ```
 
-* Add the following code snippet inside postactivate so that the project's environment variables are available on activate
+Add the following code snippet inside postactivate so that the project's environment variables are available on activate
 ```
 set -a
 . .env
@@ -62,39 +63,34 @@ set +a
 ```
 
 # Getting Started
-* To get this project running locally on your computer, first clone it
+To get this project running locally on your computer, first clone it
 ```bash
 git clone https://github.com/alexolivas/django-rest-skeleton.git
 ```
 
-* Create a new virtual wrapper environment
-```bash
-mkvirtualenv django-rest-skeleton
-```
-
-* Create an environment variables file
+Create an environment variables file
 ```bash
 vi .env
 ```
 
-* Populate it with the following (generate the SECRET_KEY with a tool like 1password: 50 characters)
+Populate it with the following (generate the SECRET_KEY with a tool like 1password: 50 characters)
 ```
 SECRET_KEY='XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
 DEBUG=True
 DATABASE_URL='postgres://postgres@localhost:5432/<db_name>'
 ```
 
-* Install the requirements
+Create a new virtual wrapper environment
+```bash
+mkvirtualenv django-rest-skeleton
+```
+
+Install the project's requirements
 ```bash
 pip install -r requirements.txt
 ```
 
-* Install the project's requirements
-```bash
-pip install -r requirements.txt
-```
-
-* Run the fab task to initialize your environment with a clean database (creates admin user with credentials admin/admin)
+Run the fab task to initialize your environment with a clean database (creates admin user with credentials admin/admin)
 ```bash
 fab dev
 ```
@@ -102,119 +98,115 @@ fab dev
 # Starting a New Project
 If you want to clone this project and use it as a starting point for a new project first:
 
-* Clone the project with a different name
+Clone the project with a different name
 ```bash
 git clone https://github.com/alexolivas/django-rest-skeleton.git <project-name>
 ```
 
-* Remove the origin so that we can later set another GIT repository as the new origin 
+Remove the origin so that you can add your own repository as the new origin
 ```bash
 cd <project-name>
 git remote rm origin
-```
-
-* Update the origin to your new git repository and push the changes
-```bash
 git remote add origin <your-projects-git-repo>
-git push -u origin --all
+git push -u origin master
 ```
 
-* Rename the project (can be different than the project directory name)
-```bash
-mv django_website_skeleton/ <project-name>
-```
-
-* Create a new virtual wrapper environment
-```bash
-mkvirtualenv <project-name>
-```
-
-* Delete the database refresh json file (contains data that pertains to the django-website-skeleton project)
-```bash
-rm -rf <project-name>/resources/db/refresh.json
-```
-
-* Replace the original project's name with your project (same name as in step 3) in manage.py
-```bash
-perl -pi -e 's/django_website_skeleton/<project-name>/g' manage.py 
-```
-
-* Do the exact same thing (same name as in step 3) to the wsgi.py file
-```bash
-perl -pi -e 's/django_website_skeleton/<project-name>/g' <project-name>/wsgi.py
-```
-
-* Do a final search/replace of django_website_skeleton to replace with your project's name using your IDE's search/replace feature.
-
-* Commit your project's name changes
-```bash
-git commit -a -m "Renamed Project"
-```
-
-* Create an environment variables file
+Create an environment variables file
 ```bash
 vi .env
 ```
 
-* Populate it with the following (generate the SECRET_KEY with a tool like 1password: 50 characters)
+Populate it with the following (generate the SECRET_KEY with a tool like 1password: 50 characters)
 ```
 SECRET_KEY='XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
 DEBUG=True
 DATABASE_URL='postgres://postgres@localhost:5432/<db_name>'
 ```
 
-* Install the project's requirements
+Rename the project (can be different than the project directory name)
+```bash
+mv django_website_skeleton/ <project-name>
+```
+
+Create a new virtual wrapper environment
+```bash
+mkvirtualenv <project-name>
+```
+
+Delete the database refresh json file (contains data that pertains to the django-website-skeleton project)
+```bash
+rm -rf <project-name>/resources/db/refresh.json
+```
+
+Replace the original project's name with your project (same name as in step 3) in manage.py
+```bash
+perl -pi -e 's/django_website_skeleton/<project-name>/g' manage.py 
+```
+
+Do the exact same thing (same name as in step 3) to the wsgi.py file
+```bash
+perl -pi -e 's/django_website_skeleton/<project-name>/g' <project-name>/wsgi.py
+```
+
+Do a final search/replace of django_website_skeleton to replace with your project's name using your IDE's search/replace feature.
+
+Commit your project's name changes
+```bash
+git commit -a -m "Renamed Project"
+```
+
+Install the project's requirements
 ```bash
 pip install -r requirements.txt
 ```
 
-* Run the following tasks to initialize your new project's environment
+Run the following tasks to initialize your new project's environment
 ```bash
 fab migrate_db
 ```
 
 # Fab Tasks
-* Start a local web server, using gunicorn (http://0.0.0.0:5000). Use this task to test the system running in a gunicorn (heroku-like) environment
+Start a local web server, using gunicorn (http://0.0.0.0:5000). Use this task to test the system running in a gunicorn (heroku-like) environment
 ```bash
 fab start_gunicorn
 ```
 
-* Install the project's requirements
+Install the project's requirements
 ```bash
 fab install_requirements
 ```
 
-* Apply database migrations
+Apply database migrations
 ```bash
 fab migrate_db
 ```
 
-* Collect static files using django's collectstatic command
+Collect static files using django's collectstatic command
 ```bash
 fab collect_static
 ```
 
-* Restore the database to a clean state
+Restore the database to a clean state
 ```bash
 fab refresh_database
 ```
 
-* Create a backup of the database in it's current state
+Create a backup of the database in it's current state
 ```bash
 fab backup_database
 ```
 
-* Generate a new dev static resources build
+Generate a new dev static resources build
 ```bash
 fab clean_build_dev
 ```
 
-* Start a node server watching for changes to static assets
+Start a node server watching for changes to static assets
 ```bash
 fab watch_dev
 ```
 
-* Run python tests
+Run python tests
 ```bash
 fab test
 ```
@@ -239,24 +231,26 @@ fab test
 heroku login
 ```
 
-* Set the heroku repo as a remote
+Set the heroku repo as a remote
 ```bash
 heroku git:remote -a <heroku-project-name>
+OR
+git remote add <custom-name> https://git.heroku.com/<heroku-project-name>.git
 ```
 
-* Add nodejs and python buildpacks so heroku knows what to build
+Add nodejs and python buildpacks so heroku knows what to build
 ```bash
 heroku buildpacks:add heroku/python
 ```
 
-* Run a test production deployment on your local environment to simulate the system running with production settings in a gunicorn (heroku-like) environment 
+Run a test production deployment on your local environment to simulate the system running with production settings in a gunicorn (heroku-like) environment 
 ```bash
 pip install -r requirements.txt
 fab test_prod_deploy
 fab start_gunicorn
 ```
 
-* To deploy using heroku CLI instead of wercker use
+To deploy using heroku CLI instead of wercker use
 ```bash
 git push heroku master
 ```
