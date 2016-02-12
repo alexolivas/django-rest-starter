@@ -3,7 +3,6 @@
 # If you want Nodesource's container you would reference nodesource/node
 # Read more about containers on our dev center
 # http://devcenter.wercker.com/docs/containers/index.html
-#box: django:1.9.1-python2
 box: python:2.7
 # This is the build pipeline. Pipelines are the core of wercker
 # Read more about pipelines on our dev center
@@ -12,8 +11,13 @@ box: python:2.7
 # You can also use services such as databases. Read more on our dev center:
 # http://devcenter.wercker.com/docs/services/index.html
 
-#services:
-# - wercker/postgresql # Don't forget to add your databases as a service
+# You can also use services such as databases. Read more on our dev center:
+# http://devcenter.wercker.com/docs/services/index.html
+services:
+   - id: postgres
+     env:
+        POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+        POSTGRES_DB: $POSTGRES_DB
 
 build:
   # The steps that will be executed on build
@@ -24,12 +28,6 @@ build:
     # Install python dependencies
     - pip-install
 
-    # Run python unit and integration tests
-#    - script:
-#        name: python tests
-#        code: |
-#          fab test
-
     # A custom script step, name value is used in the UI
     # and the code value contains the command that get executed
     - script:
@@ -38,6 +36,18 @@ build:
           echo "python version $(python --version) running"
           echo "pip version $(pip --version) running"
           pip freeze
+
+    # Refresh the database
+    - script:
+        name: migrate database
+        code: |
+          fab migrate_db
+
+    # Run python unit and integration tests
+    - script:
+        name: python tests
+        code: |
+          fab test
 
 deploy:
   steps:
