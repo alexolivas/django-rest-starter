@@ -116,14 +116,14 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ),
     'DEFAULT_THROTTLE_RATES': {
-        'anon': '100/day',
+        'anon': '150/day',
     },
     'PAGE_SIZE': 10
 }
 
 CORS_ORIGIN_WHITELIST = (
-    'localhost:3000',
-    'angular.alexolivas.com'
+    'localhost:5000',
+    'http://angular-skeleton-11.herokuapp.com'
 )
 
 CORS_ALLOW_METHODS = (
