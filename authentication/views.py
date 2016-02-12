@@ -7,11 +7,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.throttling import AnonRateThrottle
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
-from serializers import TokenSerializer, ClientMemberSerializer, LoginSerializer
-from accounts.models import ClientMembership, UserPreferences
-from accounts.serializers import UserPreferencesSerializer
-from system.models import SystemPreferences
-from system.serializers import SystemPreferencesSerializer
+from serializers import TokenSerializer, LoginSerializer
 
 
 class Login(APIView):
@@ -47,21 +43,6 @@ class Login(APIView):
                     results['token'] = token_serializer.data['key']
                     results['user'] = token_serializer.data['user']
 
-                    # Determine if the user is part of a client cohort
-                    client_membership = self.get_client_membership(user)
-                    if client_membership is not None:
-                        client_membership_serializer = ClientMemberSerializer(client_membership)
-                        results['client'] = client_membership_serializer.data['client']
-
-                    # Get the user or system preferences
-                    user_prefs = self.get_user_preferences(user)
-                    if user_prefs is not None:
-                        results['preferences'] = user_prefs
-                    else:
-                        # Default System Preferences have not been setup
-                        message = {'message': 'The default System Preferences have not been setup.'}
-                        return Response(message, status=status.HTTP_412_PRECONDITION_FAILED)
-
                     return Response(results, status=status.HTTP_200_OK)
                 else:
                     # This user is not active in the system
@@ -93,31 +74,6 @@ class Login(APIView):
                 return None
         except User.DoesNotExist:
             return None
-
-    @staticmethod
-    def get_client_membership(user):
-        try:
-            return ClientMembership.objects.get(user=user, active=True)
-        except ClientMembership.DoesNotExist:
-            return None
-
-    @staticmethod
-    def get_user_preferences(user):
-        try:
-            # Get the user's custom preferences
-            user_prefs = UserPreferences.objects.get(user=user)
-            user_prefs_serializer = UserPreferencesSerializer(user_prefs)
-            return user_prefs_serializer.data
-        except UserPreferences.DoesNotExist:
-            # The user has not setup custom preferences, get the default system preferences
-            try:
-                # System preferences are setup initially, it's a unique record so there should only be 1
-                # record at all times. Place in a try/catch for robustness
-                sys_prefs = SystemPreferences.objects.all()[0]
-                sys_prefs_serializer = SystemPreferencesSerializer(sys_prefs)
-                return sys_prefs_serializer.data
-            except SystemPreferences.DoesNotExist:
-                return None
 
 
 class Logout(APIView):

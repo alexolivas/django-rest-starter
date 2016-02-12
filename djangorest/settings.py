@@ -36,9 +36,7 @@ INSTALLED_APPS = (
     'rest_framework_swagger',
     'rest_framework.authtoken',
     'corsheaders',
-    'accounts',
     'authentication',
-    'system',
 )
 
 MIDDLEWARE_CLASSES = (
