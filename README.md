@@ -246,6 +246,7 @@ git remote add <custom-name> https://git.heroku.com/<heroku-project-name>.git
 Add nodejs and python buildpacks so heroku knows what to build
 ```bash
 heroku buildpacks:add heroku/python
+heroku buildpacks:add --index 1 heroku/nodejs
 ```
 
 Run a test production deployment on your local environment to simulate the system running with production settings in a gunicorn (heroku-like) environment 
