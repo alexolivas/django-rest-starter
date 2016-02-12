@@ -1,5 +1,9 @@
 # Skeleton for Django REST Web Services
-This project serves as a starting point to build a [Django REST](http://www.django-rest-framework.org) web service. This project ships with token based authentication but can be modified to use any other [authentication schemes](http://www.django-rest-framework.org/api-guide/authentication/).
+This is a barebones [django REST](http://www.django-rest-framework.org) web service project. The idea behind this project was to learn about django REST. The learning process gave birth to this skeleton project which can be used as a [starting point](#starting-a-new-project) for your own django REST project.
+It comes pre-configured with several python library dependencies that I typically use in a django project, such as fabric, dj-database-url, whitenoise, and gunicorn. The project only contains user authentication and user profile endpoints. In other words, a user can only login, logout and view their profile info.
+This makes the project useful for anyone wanting to start out with a basic token authentication system.
+
+Visit the [api docs](http://django-rest-skeleton.herokuapp.com/docs) and login with the credentials user@email.com/secret to interact with the APIs or visit the [angular demo](http://angular-skeleton-11.herokuapp.com/) to interact with it an a real-world scenario.
 
 [![wercker status](https://app.wercker.com/status/d873eeb709dfd4ad6b48edebe3823336/s/master "wercker status")](https://app.wercker.com/project/bykey/d873eeb709dfd4ad6b48edebe3823336)
 [![Dependency Status](https://gemnasium.com/alexolivas/django-rest-skeleton.svg)](https://gemnasium.com/alexolivas/django-rest-skeleton)
@@ -9,6 +13,7 @@ This project serves as a starting point to build a [Django REST](http://www.djan
 
 - [Pre Requisites](#pre-requisites)
 - [Getting Started](#getting-started)
+- [Starting New Project](#starting-a-new-project)
 - [Fab Tasks](#fab-tasks)
 - [Wercker/Heroku Support](#wercker-and-heroku-support)
 
