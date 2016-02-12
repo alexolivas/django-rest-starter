@@ -121,9 +121,9 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
 
+# TODO: change the variables to be WHITELIST_WEB, WHITELIST_MOBILE, etc. Research a bit more.
 CORS_ORIGIN_WHITELIST = (
-    'localhost:5000',
-    'http://angular-skeleton-11.herokuapp.com'
+    os.environ.get('CORS_ORIGIN_WHITELIST'),
 )
 
 CORS_ALLOW_METHODS = (
