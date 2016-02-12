@@ -15,7 +15,7 @@ Visit the [api docs](http://django-rest-skeleton.herokuapp.com/docs) and login w
 - [Getting Started](#getting-started)
 - [Starting New Project](#starting-a-new-project)
 - [Fab Tasks](#fab-tasks)
-- [Wercker/Heroku Support](#wercker-and-heroku-support)
+- [Wercker/Heroku Deployment](#wercker-and-heroku-deployment)
 
 -------
 # Pre Requisites
@@ -216,49 +216,5 @@ Run python tests
 fab test
 ```
 
-# Wercker And Heroku Support
-[Wercker](http://devcenter.wercker.com/index.html) is a build automation tool that can be used to build and deploy your apps in containers.
-[Heroku](https://www.heroku.com) is a cloud Platform-as-a-Service supporting several programming languages. 
-
-## Wercker
-* Login to wercker website
-* Navigate to your project's settings
-* Create a new deploy target
-* Add the following environment variables (inside the target) > HEROKU_USER, HEROKU_APP_NAME, HEROKU_KEY, HEROKU_KEY_PAIR
-* The heroku_key_pair should be generate in SSH_KEYS. [Click here](http://devcenter.wercker.com/quickstarts/deployment/heroku.html) for a complete step-by-step tutorial.
-
-## Heroku
-* Login to the heroku website.
-* Copy the public key you generated in wercker and add it to heroku (manage account > SSH Keys)
-* Go into the project > settings > add the following config variables > DATABASE_URL, DEBUG (don't add this if production), SECRET_KEY
-* Open up your terminal and login
-```bash
-heroku login
-```
-
-Set the heroku repo as a remote
-```bash
-heroku git:remote -a <heroku-project-name>
-OR
-git remote add <custom-name> https://git.heroku.com/<heroku-project-name>.git
-```
-
-Add nodejs and python buildpacks so heroku knows what to build
-```bash
-heroku buildpacks:add heroku/python
-heroku buildpacks:add --index 1 heroku/nodejs
-```
-
-Run a test production deployment on your local environment to simulate the system running with production settings in a gunicorn (heroku-like) environment 
-```bash
-pip install -r requirements.txt
-fab test_prod_deploy
-fab start_gunicorn
-```
-
-To deploy using heroku CLI instead of wercker use
-```bash
-git push heroku master
-```
-
-For complete documentation on heroku + django go to https://devcenter.heroku.com/articles/django-app-configuration.
+# Wercker And Heroku Deployment
+This project's demo is continuously built by [wercker](http://wercker.com/) and deployed by the push of a button to [heroku](http://heroku.com). I followed the [wercker deployments steps](http://devcenter.wercker.com/quickstarts/deployment/heroku.html) to get the app deployed.
