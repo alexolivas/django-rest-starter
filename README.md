@@ -46,7 +46,7 @@ vi ~/.bash_profile
 Add the following to your bash_profile
 ```
 export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/Development/
+export PROJECT_HOME=$HOME/Development
 source /usr/local/bin/virtualenvwrapper.sh
 ```
 
