@@ -19,6 +19,9 @@ Visit the [api docs](http://django-rest-skeleton.herokuapp.com/docs) and login w
 
 -------
 # Pre Requisites
+Before getting started with this django project its recommended that you create a virtual environment and setup your development database.
+
+## Virtual Environments
 It is recommended that you create a virtual environment to install the project's dependencies without having to worry about clashing dependencies with other python projects.
 
 If you haven't installed virtualenv do so via pip
@@ -67,6 +70,32 @@ set -a
 set +a
 ```
 
+## Database Setup
+During the development phase I typically use a postgres database to simulate production as much as possible. These are the database setup instructions I use for my django and django-rest projects.
+
+Install postgres if it is not already in your system
+```bash
+$ brew install postgresql
+```
+
+Create a new postgres database
+```bash
+$ createdb -U postgres <database-name>
+```
+
+Create a new devuser and give the appropriate permissions to the database you just created
+```bash
+$ echo create user <db-user> | psql postgres postgres
+$ echo grant all on database <database-name> to <db-user> | psql postgres postgres
+$ echo grant all on database <database-name> to postgres | psql postgres postgres
+```
+
+Connect to PSQL and make your user the database owner
+```bash
+$ psql -U postgres
+postgres=# ALTER DATABASE <database-name> OWNER TO <db-user>;
+```
+
 # Getting Started
 To get this project running locally on your computer, first clone it
 ```bash
@@ -82,7 +111,7 @@ Populate it with the following (generate the SECRET_KEY with a tool like 1passwo
 ```
 SECRET_KEY='XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
 DEBUG=True
-DATABASE_URL='postgres://postgres@localhost:5432/<db_name>'
+DATABASE_URL='postgres://<db-user>@localhost:5432/<db_name>'
 ```
 
 Create a new virtual wrapper environment
@@ -125,7 +154,7 @@ Populate it with the following (generate the SECRET_KEY with a tool like 1passwo
 ```
 SECRET_KEY='XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
 DEBUG=True
-DATABASE_URL='postgres://postgres@localhost:5432/<db_name>'
+DATABASE_URL='postgres://<db-user>@localhost:5432/<db_name>'
 ```
 
 Rename the project (can be different than the project directory name)
