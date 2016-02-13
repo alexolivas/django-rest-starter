@@ -78,22 +78,15 @@ Install postgres if it is not already in your system
 $ brew install postgresql
 ```
 
-Create a new postgres database
+Create users and database instances
 ```bash
-$ createdb -U postgres <database-name>
-```
+$ psql postgres
 
-Create a new devuser and give the appropriate permissions to the database you just created
-```bash
-$ echo create user <db-user> | psql postgres postgres
-$ echo grant all on database <database-name> to <db-user> | psql postgres postgres
-$ echo grant all on database <database-name> to postgres | psql postgres postgres
-```
-
-Connect to PSQL and make your user the database owner
-```bash
-$ psql -U postgres
-postgres=# ALTER DATABASE <database-name> OWNER TO <db-user>;
+postgres=# CREATE USER postgres WITH SUPERUSER;
+CREATE DATABASE <database-name>;
+GRANT ALL PRIVILEGES ON DATABASE <database-name> TO postgres;
+CREATE USER <db-user> WITH PASSWORD '<password>';
+GRANT ALL PRIVILEGES ON DATABASE <database-name> TO <db-user>;
 ```
 
 # Getting Started
