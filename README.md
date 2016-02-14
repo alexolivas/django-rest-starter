@@ -75,13 +75,16 @@ During the development phase I typically use a postgres database to simulate pro
 
 Install postgres if it is not already in your system
 ```bash
-$ brew install postgresql
+brew install postgresql
+```
+
+PSQL into postgres
+```bash
+psql postgres
 ```
 
 Create users and database instances
-```bash
-$ psql postgres
-
+```psql
 postgres=# CREATE USER postgres WITH SUPERUSER;
 CREATE DATABASE <database-name>;
 GRANT ALL PRIVILEGES ON DATABASE <database-name> TO postgres;
