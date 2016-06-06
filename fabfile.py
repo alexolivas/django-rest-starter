@@ -24,6 +24,11 @@ def install_requirements():
 
 
 @task
+def upgrade_pip():
+    local('pip install --upgrade pip')
+
+
+@task
 def migrate_db():
     print(green("applying database migrations.."))
     local('python manage.py makemigrations')
