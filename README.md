@@ -53,9 +53,9 @@ export PROJECT_HOME=$HOME/Development
 source /usr/local/bin/virtualenvwrapper.sh
 ```
 
-Run the following command to verify that the virtual environment wrapper was successfully installed, it should spit out the options related to it
+Create a virtual environment to be able to install the project's dependencies isolated to your machine's python installation
 ```bash
-mkvirtualenv
+mkvirtualenv django-rest-skeleton
 ```
 
 Last step to be able to work with virtualenvwrapper and environment variables.
