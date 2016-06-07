@@ -93,9 +93,9 @@ GRANT ALL PRIVILEGES ON DATABASE <database-name> TO <db-user>;
 ```
 
 # Getting Started
-To get this project running locally on your computer, first clone it
+The first step to start working on this project is to fork this repository into your github account. Then clone it into your local development environment:
 ```bash
-git clone https://github.com/alexolivas/django-rest-skeleton.git
+git clone https://github.com/<your-account-or-organization>/django-rest-skeleton.git
 ```
 
 Create an environment variables file
@@ -201,6 +201,11 @@ Start a local web server, using gunicorn (http://0.0.0.0:5000). Use this task to
 fab start_gunicorn
 ```
 
+Start a development server (http://localhost:8000)
+```bash
+fab start_webserver
+```
+
 Install the project's requirements
 ```bash
 fab install_requirements
@@ -229,11 +234,6 @@ fab backup_database
 Generate a new dev static resources build
 ```bash
 fab clean_build_dev
-```
-
-Start a node server watching for changes to static assets
-```bash
-fab watch_dev
 ```
 
 Run python tests
