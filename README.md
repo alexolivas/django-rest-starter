@@ -201,7 +201,7 @@ Start a local web server, using gunicorn (http://0.0.0.0:5000). Use this task to
 fab start_gunicorn
 ```
 
-Start a development server (http://localhost:8000)
+Starts the Django development server ((http://localhost:8000), a lightweight Web server written purely in Python
 ```bash
 fab start_webserver
 ```
