@@ -216,11 +216,6 @@ Apply database migrations
 fab migrate_db
 ```
 
-Collect static files using django's collectstatic command
-```bash
-fab collect_static
-```
-
 Restore the database to a clean state
 ```bash
 fab refresh_database
