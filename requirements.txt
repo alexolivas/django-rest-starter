@@ -25,7 +25,7 @@ pycparser==2.14
 pycrypto==2.6.1
 PyJWT==1.4.1
 python-openid==2.2.5
-python-social-auth==0.2.14
+python-social-auth==0.2.19
 PyYAML==3.11
 requests==2.10.0
 requests-oauthlib==0.6.2
