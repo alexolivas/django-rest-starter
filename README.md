@@ -125,6 +125,11 @@ Run the fab task to initialize your environment with a clean database (creates a
 fab dev
 ```
 
+Create a super user so that you can login to the admin site
+```bash
+ python manage.py createsuperuser
+ ```
+
 # Starting a New Project
 If you want to clone this project and use it as a starting point for a new project first:
 
