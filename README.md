@@ -93,7 +93,7 @@ GRANT ALL PRIVILEGES ON DATABASE <database-name> TO <db-user>;
 ```
 
 # Getting Started
-The first step to start working on this project is to [https://github.com/alexolivas/django-rest-skeleton/edit/master/README.md#fork-destination-box](fork) this repository into your github account. Then clone it into your local development environment:
+The first step to start working on this project is to [fork](https://github.com/alexolivas/django-rest-skeleton/edit/master/README.md#fork-destination-box) this repository into your github account. Then clone it into your local development environment:
 ```bash
 git clone https://github.com/<your-account-or-organization>/django-rest-skeleton.git
 ```
