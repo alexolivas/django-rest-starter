@@ -15,6 +15,7 @@ Visit the [api docs](http://django-rest-skeleton.herokuapp.com/docs) and login w
 - [Getting Started](#getting-started)
 - [Starting New Project](#starting-a-new-project)
 - [Fab Tasks](#fab-tasks)
+- [Helpful Commands](#helpful-commands)
 - [Wercker/Heroku Deployment](#wercker-and-heroku-deployment)
 
 -------
@@ -239,6 +240,12 @@ fab clean_build_dev
 Run python tests
 ```bash
 fab test
+```
+
+# Helpful Commands
+Run this command to display the project's dependencies as a tree structure (pipdeptree comes pre-configured as a dependency on this project)
+```bash
+pipdeptree
 ```
 
 # Wercker And Heroku Deployment
