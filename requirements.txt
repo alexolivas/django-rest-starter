@@ -6,7 +6,7 @@ Django==1.9.8
 django-cors-headers==1.1.0
 django-filter==0.13.0
 django-rest-swagger==2.0.1
-djangorestframework==3.3.3
+djangorestframework==3.4.0
 djangorestframework-jwt==1.8.0
 ecdsa==0.13
 enum34==1.1.6
