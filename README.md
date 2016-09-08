@@ -121,15 +121,15 @@ Install the project's requirements
 pip install -r requirements.txt
 ```
 
+Create a super user so that you can login to the admin site
+```bash
+python manage.py createsuperuser
+```
+
 Run the fab task to initialize your environment with a clean database (creates admin user with credentials admin/admin)
 ```bash
 fab dev
 ```
-
-Create a super user so that you can login to the admin site
-```bash
- python manage.py createsuperuser
- ```
 
 # Starting a New Project
 If you want to clone this project and use it as a starting point for a new project first:
@@ -194,6 +194,11 @@ git commit -a -m "Renamed Project"
 Install the project's requirements
 ```bash
 pip install -r requirements.txt
+```
+
+Create a super user so that you can login to the admin site
+```bash
+python manage.py createsuperuser
 ```
 
 Run the following tasks to initialize your new project's environment
