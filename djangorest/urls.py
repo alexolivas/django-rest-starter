@@ -8,9 +8,8 @@ schema_view = get_swagger_view(title='Django Rest Skeleton API')
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
-    url(r'^', schema_view),
     url(r'^auth/', include(auth_urls)),
-
+    url(r'^docs/', schema_view),
     url(r'^admin/', include(admin.site.urls)),
 ]
 
