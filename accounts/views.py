@@ -34,6 +34,3 @@ class AccountDetails(APIView):
             'profile': profile_serializer.data
         }
         return Response(account_data, status=status.HTTP_200_OK)
-
-    def post(self, request, format=None):
-        return Response(dict(), status=status.HTTP_200_OK)
