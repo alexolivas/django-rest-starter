@@ -41,6 +41,7 @@ build:
     - script:
         name: migrate database
         code: |
+          python manage.py makemigrations
           python manage.py migrate
 
     # Run python unit and integration tests
