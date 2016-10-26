@@ -221,6 +221,10 @@ Commit your project's name changes
 git commit -a -m "Renamed Project"
 ```
 
+If you are not deploying to [Heroku](https://www.heroku.com/) or using [wercker](http://wercker.com/) as your CI server you can safely delete the following files respectively:
+- [Procfile](https://github.com/alexolivas/django-rest-starter/blob/master/Procfile)
+- [wercker.yml](https://github.com/alexolivas/django-rest-starter/blob/master/wercker.yml)
+
 # Helpful Commands
 Run this command to display the project's dependencies as a tree structure (pipdeptree comes pre-configured as a dependency on this project)
 ```bash
