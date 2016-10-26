@@ -2,7 +2,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 # from rest_framework import routers
 from authentication import auth_urls
-from profiles import profile_urls
+from accounts import account_urls
 
 # router = routers.DefaultRouter()
 
@@ -11,7 +11,7 @@ from profiles import profile_urls
 urlpatterns = [
     # url(r'^', include(router.urls)),
     url(r'^auth/', include(auth_urls)),
-    url(r'^profile/', include(profile_urls)),
+    url(r'^account/', include(account_urls)),
 
     url(r'^docs/', include('rest_framework_docs.urls')),
     url(r'^admin/', include(admin.site.urls)),

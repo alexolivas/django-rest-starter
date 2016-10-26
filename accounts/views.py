@@ -1,5 +1,4 @@
 from rest_framework import status
-# from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -7,8 +6,7 @@ from rest_framework.throttling import AnonRateThrottle
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 
-# @api_view()
-class ProfileDetail(APIView):
+class AccountDetails(APIView):
     """
     This endpoint allows a user to manage a release: view, edit, delete.
 
