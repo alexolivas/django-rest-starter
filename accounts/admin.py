@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import Account
+from models import Profile
 
 
 # Register your models here.
@@ -9,4 +9,4 @@ class ProfileAdmin(admin.ModelAdmin):
     list_filter = ('user__is_active',)
     search_fields = ['user__email', 'user__first_name', 'user__last_name']
 
-admin.site.register(Account, ProfileAdmin)
+admin.site.register(Profile, ProfileAdmin)
