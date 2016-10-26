@@ -19,16 +19,16 @@ class AccountDetails(APIView):
     throttle_classes = (AnonRateThrottle,)
 
     @staticmethod
-    def get_account_details(user_id):
+    def get_user_profile(user_id):
         try:
             return Profile.objects.get(user__pk=user_id)
         except Profile.DoesNotExist:
             raise Http404
 
     def get(self, request, format=None):
-        account = self.get_account_details(request.user.id)
-        user_serializer = UserSerializer(account.user)
-        profile_serializer = ProfileSerializer(account)
+        profile = self.get_user_profile(request.user.id)
+        user_serializer = UserSerializer(profile.user)
+        profile_serializer = ProfileSerializer(profile)
         account_data = {
             'user': user_serializer.data,
             'profile': profile_serializer.data
