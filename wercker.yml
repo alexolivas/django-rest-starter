@@ -41,14 +41,13 @@ build:
     - script:
         name: migrate database
         code: |
-          python manage.py makemigrations
           python manage.py migrate
 
     # Run python unit and integration tests
-    - script:
-        name: python tests
-        code: |
-          python manage.py test
+#    - script:
+#        name: python tests
+#        code: |
+#          python manage.py test
 
 deploy:
   steps:
