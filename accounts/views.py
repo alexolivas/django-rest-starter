@@ -3,6 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.throttling import AnonRateThrottle
+from rest_framework.authentication import TokenAuthentication
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from django.http import Http404
 from models import Profile
@@ -12,9 +13,9 @@ from serializers.profile_serializer import ProfileSerializer
 
 class AccountDetails(APIView):
     """
-    This endpoint allows a user to manage their account details.
+    This endpoint allows a user to view their account details.
     """
-    authentication_classes = (JSONWebTokenAuthentication,)
+    authentication_classes = (TokenAuthentication, JSONWebTokenAuthentication,)
     permission_classes = (IsAuthenticated,)
     throttle_classes = (AnonRateThrottle,)
 
