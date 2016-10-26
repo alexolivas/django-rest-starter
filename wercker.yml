@@ -41,13 +41,13 @@ build:
     - script:
         name: migrate database
         code: |
-          fab migrate_db
+          python manage.py migrate
 
     # Run python unit and integration tests
     - script:
         name: python tests
         code: |
-          fab test
+          python manage.py test
 
 deploy:
   steps:
