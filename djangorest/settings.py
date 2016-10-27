@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 import os
 import dj_database_url
 import datetime
+from authentication import utils
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -130,6 +131,7 @@ REST_FRAMEWORK = {
 
 JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=300),
+    'JWT_RESPONSE_PAYLOAD_HANDLER':  utils.jwt_response_payload_handler
 }
 
 STATIC_URL = '/static/'
