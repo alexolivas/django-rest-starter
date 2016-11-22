@@ -1,0 +1,50 @@
+stages:
+  - test
+  - deploy
+
+test:
+  type: test
+  script:
+    - apt-get update -qy
+    - apt-get install -y python-dev python-pip
+    - pip install -r requirements.txt
+    - python manage.py test -v 2
+
+# This job is responsible for refreshing the development stage environment after every commit to master
+stage dev deployment:
+  type: deploy
+  before_script:
+    - echo "deb http://toolbelt.heroku.com/ubuntu ./" > /etc/apt/sources.list.d/heroku.list
+    - wget -O- https://toolbelt.heroku.com/apt/release.key | apt-key add -
+    - apt-get update
+    - apt-get install -y heroku-toolbelt
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - dpl --provider=heroku --app=$HEROKU_DEV_APP --api-key=$HEROKU_API_KEY
+    - heroku run python manage.py migrate --exit-code --app $HEROKU_DEV_APP
+    - heroku run python atlas/resources/refresh_db.py --app $HEROKU_DEV_APP
+    # This is only here to test the git command
+    - heroku run python atlas/resources/data/backup/restore_db.py --app $HEROKU_DEV_APP
+  only:
+  - master
+
+# This job is responsible for patching the hotfix (production copy) environment
+hotfix patch:
+  type: deploy
+  before_script:
+    - echo "deb http://toolbelt.heroku.com/ubuntu ./" > /etc/apt/sources.list.d/heroku.list
+    - wget -O- https://toolbelt.heroku.com/apt/release.key | apt-key add -
+    - apt-get update
+    - apt-get install -y heroku-toolbelt
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - dpl --provider=heroku --app=$HEROKU_HOTFIX_APP --api-key=$HEROKU_API_KEY
+    - heroku run python manage.py migrate --exit-code --app $HEROKU_HOTFIX_APP
+  only:
+  - hotfix
+
+# TODO: READ >> https://gitlab.com/help/ci/yaml/README.md#environment
