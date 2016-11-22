@@ -1,0 +1,10 @@
+# .coveragerc to control coverage.py
+
+[run]
+branch = True
+
+omit =
+    */rest_framework*
+    */site-packages/*
+    */migrations/*
+    manage.py

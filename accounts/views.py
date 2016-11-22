@@ -15,7 +15,7 @@ class AccountDetails(APIView):
     """
     This endpoint allows a user to view their account details.
     """
-    authentication_classes = (TokenAuthentication, JSONWebTokenAuthentication,)
+    authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (IsAuthenticated,)
     throttle_classes = (AnonRateThrottle,)
 
