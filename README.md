@@ -48,7 +48,7 @@ vi .env
 
 Populate it with the following (generate the SECRET_KEY with a tool like 1password: 50 characters)
 ```
-SECRET_KEY='XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+SECRET_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 DEBUG=True
 DATABASE_URL='postgres://<db-user>@localhost:5432/<db_name>'
 ALLOWED_HOST=<your_host_url>
