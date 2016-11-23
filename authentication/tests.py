@@ -60,3 +60,30 @@ class LoginTestCase(BaseAuthTestCase):
         }
         response = self.api_client.post('/auth/api-token-auth/', login_credentials, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_jwt_refresh(self):
+        """
+        This test verifies that an existing user can refresh their JWT token
+        :return:
+        """
+        # NOTE: Only unexpired tokens can be refreshed.
+        login_credentials = {
+            'username': self.username,
+            'password': self.password
+        }
+        response = self.api_client.post('/auth/api-token-auth/', login_credentials, format='json')
+        jwt_token = response.data['token']
+
+        decoded_payload = utils.jwt_decode_handler(jwt_token)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIsNotNone(jwt_token)
+        decoded_payload = utils.jwt_decode_handler(jwt_token)
+
+        refresh_payload = {
+            'token': jwt_token
+        }
+        response = self.api_client.post('/auth/api-token-refresh/', refresh_payload, format='json')
+        new_jwt_token = response.data['token']
+        new_decoded_payload = utils.jwt_decode_handler(jwt_token)
+        self.assertEqual(decoded_payload['orig_iat'], new_decoded_payload['orig_iat'])
+        self.assertEqual(decoded_payload['exp'], new_decoded_payload['exp'])
