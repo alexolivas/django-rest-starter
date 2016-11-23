@@ -54,7 +54,6 @@ class LoginTestCase(BaseAuthTestCase):
         with a valid JWT Token
         :return:
         """
-        print "inside test_view_your_profile"
         login_credentials = {
             'username': self.username,
             'password': self.password
