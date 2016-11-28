@@ -47,6 +47,7 @@ build:
     - script:
         name: python tests
         code: |
+          python manage.py migrate
           python manage.py test
 
 deploy:
