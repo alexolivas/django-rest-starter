@@ -14,11 +14,10 @@ box: python:2.7
 # You can also use services such as databases. Read more on our dev center:
 # http://devcenter.wercker.com/docs/services/index.html
 services:
-  - wercker/postgresql
-#   - id: postgres
-#     env:
-#        POSTGRES_PASSWORD: $POSTGRES_PASSWORD
-#        POSTGRES_DB: $POSTGRES_DB
+   - id: postgres
+     env:
+        POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+        POSTGRES_DB: $POSTGRES_DB
 
 # https://github.com/wercker/wercker-django-example/blob/master/wercker.yml
 build:
@@ -40,10 +39,10 @@ build:
           pip freeze
 
     # Refresh the database
-#    - script:
-#        name: migrate database
-#        code: |
-#          python manage.py migrate
+    - script:
+        name: migrate database
+        code: |
+          python manage.py migrate
 
     # Run python unit and integration tests
     - script:
