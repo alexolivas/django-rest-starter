@@ -51,7 +51,7 @@ Populate it with the following (generate the SECRET_KEY with a tool like 1passwo
 SECRET_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 DEBUG=True
 DATABASE_URL='postgres://<db-user>@localhost:5432/<db_name>'
-ALLOWED_HOST=<your_host_url>
+ALLOWED_HOSTS=<your_host_url>
 ```
 
 
