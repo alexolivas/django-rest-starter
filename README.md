@@ -52,6 +52,7 @@ SECRET_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 DEBUG=True
 DATABASE_URL='postgres://<db-user>@localhost:5432/<db_name>'
 ALLOWED_HOSTS=<your_host_url>
+CORS_ORIGIN_WHITELIST=<whitelisted-urls>
 ```
 
 
