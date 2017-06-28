@@ -3,7 +3,7 @@ This is a barebones [django REST](http://www.django-rest-framework.org) web serv
 It comes pre-configured with several python library dependencies that I typically use in a django project such as dj-database-url. The project only contains user authentication (using JWT Tokens) and user profile endpoints. In other words, a user can only login, logout and view their profile info.
 This makes the project useful for anyone wanting to start out with a simple JWT Token authentication system.
 
-Visit the [api docs](http://django-rest-starter.herokuapp.com/) and login with the credentials user@email.com/secret1234 to interact with the APIs or visit the [angular demo](http://angular-starter-11.herokuapp.com/) to interact with it an a real-world scenario.
+Visit the [api docs](https://djangorest-starter-21169.herokuapp.com/docs/) and login with the credentials user@email.com/secret1234 to interact with the APIs or visit the [angular demo](http://angular-starter-11.herokuapp.com/) to interact with it an a real-world scenario.
 
 [![wercker status](https://app.wercker.com/status/d873eeb709dfd4ad6b48edebe3823336/s/master "wercker status")](https://app.wercker.com/project/bykey/d873eeb709dfd4ad6b48edebe3823336)
 [![Dependency Status](https://gemnasium.com/alexolivas/django-rest-starter.svg)](https://gemnasium.com/alexolivas/django-rest-starter)
